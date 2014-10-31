@@ -1,6 +1,6 @@
-<table id="{{meta.djid_id}}"><tr><td></td></tr></table> 
+<table id="{{meta.djid_id}}"><tr><td></td></tr></table>
 <div id="{{meta.djid_id}}-pager"></div>
- 
+
 <script type="text/javascript">
 (function () {
     require(['jquery', 'djid'], function($, Djid) {
@@ -9,9 +9,12 @@
             grid = new Djid.Djid('{{ meta.djid_id }}', {
                 colNames: {{ djid.col_names|safe }},
                 colModel: {{ djid.col_model|safe }},
+                {% for key, value in djid.aditional_params.items %}
+                    {{ key }}: {{ value}},
+                {% endfor %}
                 rowNum: {{ djid.page_size }}
-            }); 
-        }); 
+            });
+        });
     });
 })();
 </script>

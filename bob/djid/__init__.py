@@ -15,7 +15,7 @@ class DjidMeta(type):
     """A djid metaclass."""
 
     __registry__ = {}
-    
+
     def __init__(cls, clsname, bases, dict_):
         column_dict = collections.OrderedDict()
         meta = dict_.get('Meta')
@@ -33,6 +33,9 @@ class DjidMeta(type):
         else:
             cls.init_from_dict(dict_, mount_column)
         meta.column_dict = column_dict
+
+        meta.aditional_params = getattr(meta, 'aditional_params', None)
+
         try:
             cls.__registry__[meta.djid_id] = cls
         except AttributeError:
@@ -104,7 +107,7 @@ class Djid(object):
             cls._meta.column_dict.values(),
             queryset,
         )
-        
+
         order_string = (
             request.GET.get('sidx', '') +
             request.GET.get('sord', '')
@@ -123,7 +126,7 @@ class Djid(object):
     @classmethod
     def format_ajax_row(cls, model):
         """Returns a row formatted for AJAX response."""
-        cell = [] 
+        cell = []
         for field in cls._meta.column_dict.values():
             cell.append(field.format_ajax_value(model))
         return {'id': model.id, 'cell': cell}
@@ -164,3 +167,7 @@ class Djid(object):
         return json.dumps([
             column.get_model() for column in cls._meta.column_dict.values()
         ])
+
+    @classmethod
+    def aditional_params(cls):
+        return cls._meta.aditional_params

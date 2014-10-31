@@ -19,7 +19,7 @@ define(['jquery', 'jqGrid', 'mustache'], function ($, jqGrid, Mustache) {
         this.id = id;
         this.pager_id = '#' + id + '-pager';
         new_params['pager'] = this.pager_id;
-        new_params['url'] = '/djid/' + id + '/',
+        new_params['url'] = '/djid/' + id + '/';
         this.jqgrid = $('#' + id).jqGrid(new_params);
         this.jqgrid.navGrid(this.pager_id, {
             'edit': false,
@@ -43,7 +43,7 @@ define(['jquery', 'jqGrid', 'mustache'], function ($, jqGrid, Mustache) {
                 that.add_progress()
             },
             id: this.get_id('csv', true)
-            
+
         });
     };
     Djid.prototype.default_params = {
